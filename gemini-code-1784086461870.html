@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホラー体験型接客イベント【Afraidoll】 - VRChat</title>
+    <style>
+        /* --- 全体デザイン設定（ダーク＆ゴシック） --- */
+        :root {
+            --bg-color: #0d060f; /* 闇を思わせる漆黒に近い紫 */
+            --main-purple: #9b72a6; /* あふどるピンク・パープル */
+            --bright-purple: #d1a5db;
+            --text-color: #e2d9e3;
+            --dark-card: #160f1a;
+            --border-color: #2e1c33;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Georgia', 'YakuHanJP', 'Noto Serif JP', '游明朝', serif;
+            line-height: 1.8;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(155, 114, 166, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(155, 114, 166, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* --- 装飾パーツ --- */
+        .gothic-border {
+            border: 2px solid var(--border-color);
+            outline: 1px solid var(--main-purple);
+            outline-offset: -6px;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* --- ヘッダー（ビジュアルエリア） --- */
+        header {
+            position: relative;
+            text-align: center;
+            padding: 80px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-area img {
+            max-width: 100%;
+            width: 450px;
+            height: auto;
+            filter: drop-shadow(0 0 15px rgba(155, 114, 166, 0.6));
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(155, 114, 166, 0.6)); }
+            50% { transform: scale(1.02); filter: drop-shadow(0 0 25px rgba(155, 114, 166, 0.9)); }
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            letter-spacing: 0.3em;
+            color: var(--bright-purple);
+            margin-top: 25px;
+            text-shadow: 0 0 8px rgba(209, 165, 219, 0.5);
+            font-weight: bold;
+        }
+
+        .sub-tagline {
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            color: #8a7a8f;
+            margin-top: 10px;
+        }
+
+        /* --- コンテンツレイアウト --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--bright-purple);
+            text-align: center;
+            margin-bottom: 40px;
+            letter-spacing: 0.2em;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h2::before, h2::after {
+            content: '†';
+            margin: 0 15px;
+            color: var(--main-purple);
+            font-size: 1.4rem;
+        }
+
+        /* --- イントロダクション --- */
+        .intro-text {
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 2.2;
+            letter-spacing: 0.05em;
+        }
+
+        .highlight-phrase {
+            color: var(--bright-purple);
+            font-size: 1.25rem;
+            display: block;
+            margin: 25px 0;
+            text-shadow: 0 0 5px rgba(155, 114, 166, 0.3);
+        }
+
+        /* --- インフォメーション（テーブルスタイル） --- */
+        .info-grid {
+            background-color: var(--dark-card);
+            border-radius: 4px;
+        }
+
+        .info-row {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            width: 25%;
+            font-weight: bold;
+            color: var(--main-purple);
+            letter-spacing: 0.1em;
+        }
+
+        .info-value {
+            width: 75%;
+        }
+
+        /* 警告・推奨事項枠 */
+        .alert-box {
+            background: rgba(46, 28, 51, 0.3);
+            border: 1px solid rgba(155, 114, 166, 0.4);
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 4px;
+        }
+
+        .alert-box h4 {
+            color: #ff6688;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- アバウト（イベントのルールや特徴） --- */
+        .about-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--main-purple);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(155, 114, 166, 0.15);
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+            color: var(--main-purple);
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: var(--bright-purple);
+            margin-bottom: 10px;
+        }
+
+        /* --- キャスト募集セクション --- */
+        .recruit-box {
+            background: linear-gradient(135deg, #160f1a 0%, #0d060f 100%);
+        }
+
+        .recruit-box h3 {
+            text-align: center;
+            color: var(--bright-purple);
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+        }
+
+        .recruit-list {
+            list-style: none;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        .recruit-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+        }
+
+        .recruit-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--main-purple);
+        }
+
+        .cta-button-wrap {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--dark-card);
+            color: var(--bright-purple);
+            border: 1px solid var(--main-purple);
+            padding: 15px 40px;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 0.15em;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            background: var(--main-purple);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px var(--main-purple);
+            text-shadow: none;
+        }
+
+        /* --- フッター --- */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: #65546a;
+            letter-spacing: 0.1em;
+        }
+
+        /* --- レスポンシブ対応 --- */
+        @media (max-width: 768px) {
+            .info-row {
+                flex-direction: column;
+            }
+            .info-label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .info-value {
+                width: 100%;
+            }
+            .logo-area img {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー部分 -->
+    <header>
+        <div class="logo-area">
+            <!-- ⚠️ご自身のアカウント等にアップロードしたロゴ画像のURLに差し替えてください -->
+            <img src="afdllogo_1.jpg" alt="Afraidoll">
+        </div>
+        <p class="tagline">可憐な恐怖が支配する世界へようこそ</p>
+        <p class="sub-tagline">VRChat ホラー体験型接客イベント</p>
+    </header>
+
+    <div class="container">
+
+        <!-- コンセプト紹介 -->
+        <section id="concept">
+            <div class="intro-text">
+                ここは、ただの“イベント”ではありません。<br>
+                可愛い、優しい、楽しいだけじゃない。<br>
+                ここで待っているのは、<br>
+                <span class="highlight-phrase">恐怖そのものが“おもてなし”する特別な体験です。</span>
+                次第に、異変が起こりはじめる館の中で、<br>
+                あなたは何を見て、何を信じますか？
+            </div>
+        </section>
+
+        <!-- イベント情報 -->
+        <section id="info">
+            <h2>INFORMATION</h2>
+            <div class="info-grid gothic-border">
+                <div class="info-row">
+                    <div class="info-label">DATE</div>
+                    <div class="info-value">近日公開 / 不定期金曜日 開催予定</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">PLACE</div>
+                    <div class="info-value">VRChat Group: <strong>AFD_DOLL.2311</strong></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">RECOMMEND</div>
+                    <div class="info-value">PCVRでの参加を強く推奨しています。<br>より没入感のある恐怖体験をお楽しみいただけます。</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">TAG</div>
+                    <div class="info-value">#あふどる</div>
+                </div>
+
+                <!-- 警告枠 -->
+                <div class="alert-box">
+                    <h4>⚠️ WARNING</h4>
+                    <p>このイベントにはホラー演出・驚かし要素が含まれます。心臓の弱い方・ホラーが苦手な方はご注意ください。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 特徴・ルール -->
+        <section id="about">
+            <h2>WHAT'S THIS EVENT?</h2>
+            <div class="about-cards">
+                <div class="card">
+                    <div class="card-icon">†</div>
+                    <div class="card-title">ホラー演出ありの没入型接客</div>
+                    <p>可愛い亡霊たちによるおもてなしと、館に満ちる不穏な異変をお楽しみください。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🖤</div>
+                    <div class="card-title">無言参加OK / RP歓迎</div>
+                    <p>声を出せない環境でのご参加や、ロールプレイ（RP）での参加も大歓迎です。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📸</div>
+                    <div class="card-title">写真撮影OK</div>
+                    <p>思い出の一枚をハッシュタグと共に。※許可のない動画撮影はNGとなります。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- キャスト募集 -->
+        <section id="recruit">
+            <h2>CAST RECRUIT</h2>
+            <div class="recruit-box gothic-border">
+                <h3>— 一緒に、恐怖と静寂が支配する世界をつくりませんか？ —</h3>
+                <ul class="recruit-list">
+                    <li>満18歳以上であること</li>
+                    <li>PCVR環境での接客ができること</li>
+                    <li>コンセプトに合致した改変ができること</li>
+                    <li>VC（ボイスチャット）を使用しての接客ができること</li>
+                    <li>Discordを使用してのやり取りができること</li>
+                    <li>月1回の出勤/参加が出来ること</li>
+                    <li>他のキャストやスタッフと仲良く出来ること</li>
+                    <li>ホラーが極度に苦手でないこと</li>
+                    <li>その他、当イベントの禁止事項やルールを遵守できること</li>
+                </ul>
+                <div class="cta-button-wrap">
+                    <!-- 応募フォーム（Googleフォーム等）のリンクをhrefに入れます -->
+                    <a href="https://docs.google.com/forms/..." class="cta-button" target="_blank">CASTに応募する</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- フッター -->
+    <footer>
+        <p>&copy; Afraidoll. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
